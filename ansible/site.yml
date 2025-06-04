@@ -1,0 +1,14 @@
+---
+- name: Arch Setup
+  hosts: localhost
+  connection: local
+  become: yes
+  become_user: "{{ ansible_user_id }}"
+
+  vars:
+    aur_helper: yay
+
+  roles:
+    - dotfiles
+    - extra
+
