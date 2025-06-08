@@ -1,13 +1,11 @@
 ---
 - name: Install dependencies
+  become: yes
+  become_user: root
   pacman:
     name:
       - reflector
-      - cpupower
-      - thermald
       - irqbalance
-      - cpuower
-      - preload
 
 - name: Enable performance services
   become: yes
@@ -17,42 +15,9 @@
     enabled: yes
     state: started
   loop:
-    - thermald
+    - reflector.timer
     - irqbalance
     - fstrim.timer
-    - cpupower
-    - preload
-
-- name: Configure reflector for mirror updates
-  become: yes
-  become_user: root
-  copy:
-    content: |
-      --save /etc/pacman.d/mirrorlist
-      --protocol https
-      --country "US,CA"
-      --latest 10
-      --sort rate
-    dest: /etc/xdg/reflector/reflector.conf
-    backup: yes
-
-- name: Enable reflector timer
-  become: yes
-  become_user: root
-  systemd:
-    name: reflector.timer
-    enabled: yes
-    state: started
-
-- name: Set CPU governor to performance
-  become: yes
-  become_user: root
-  lineinfile:
-    path: /etc/default/cpupower
-    regexp: '^governor='
-    line: "governor='ondemand'"
-    create: yes
-  notify: restart cpupower
 
 - name: Configure swappiness
   become: yes
