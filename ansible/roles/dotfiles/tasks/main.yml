@@ -78,6 +78,7 @@
       - materia-dark
       - hyprshot
       - pyprland
+      - cliphist
     use: "{{ aur_helper }}"
     state: present
 

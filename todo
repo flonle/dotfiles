@@ -1,7 +1,6 @@
 kitty trailing
 kitty confirm on close
 kitty jetbrains mono font
-A clipboard manager! TUI is fine
 waybar
 	- volume
 	- temp
@@ -12,60 +11,11 @@ waybar
 	- move workspaces widget to left
 	- middle widget -> name of currently focused window
 	- something to show running daemons, like slack
+fix dynamic-cursor plugin
+Decode on pywal
+	- pywalfox too much imo
+	- sometimes pywal colors ugly, perhaps another system
+screenshot editing  & image viewing -> swappy is too slow, pinta crashes, swayimg is weird
+tumbler for thumbnails
+ranger?
 
-dependencies
-	yay
-		wofi
-		pywal
-		blueman
-		bluez
-		hyprpicer
-		waybar
-		otf-codenewroman-nerd
-		swaync
-		gvfs (part of swaync deps, not sure why, perhaps first try without?
-		nwg-look
-		qogir-icon-theme (set with nwg-look)
-		materia-dark (set with nwg-look)
-		hyprlock
-		kitty
-		hypridle
-		htop
-		hyprshot
-		pyprland
-		thunar
-
-reflector
-pipewire
-pipewire-pulse
-pipewire-alsa
-pipewire-jack
-pavucontrol
-pulsemixer
-spotify
-firefox
-code
-visual-studio-code-bin
-neovim
-libreoffice-fresh
-obsidian
-brightnessctl
-nerd-fonts
-
-systemctl enable bluetooth
-systemctl enable pipewire.service
-systemctl enable pipewire-pulse.service
-systemctl enable systemd-networkd
-systemctl enable systemd-resolved
-
-hyprpm add https://github.com/virtcode/hypr-dynamic-cursors
-hyprpm enable dynamic-cursors
-
-apparently you can uncomment MulticastDNS=yes in /etc/resolved.conf to enable mdns in systemd-resolved
-also systemd-networkd
-
-random deps I want myself
-	neovim
-	fd
-	rg
-	eza
