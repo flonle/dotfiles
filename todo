@@ -19,4 +19,5 @@ screenshot editing  & image viewing -> swappy is too slow, pinta crashes, swayim
 tumbler for thumbnails
 ranger?
 editor env var
+fix bug where many waybars are spawned after a while in locked state
 

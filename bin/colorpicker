@@ -1,0 +1,6 @@
+#!/bin/bash
+
+color=$(hyprpicker)
+wl-copy "$color"
+notify-send "Color Picker" "Color copied to clipboard: ${color}" -a "Color Picker"
+
