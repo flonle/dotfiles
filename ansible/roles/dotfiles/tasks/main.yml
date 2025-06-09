@@ -63,6 +63,7 @@
 - name: Install AUR packages
   kewlfft.aur.aur:
     name:
+      - pacman-contrib  # for 'checkupdates'
       - visual-studio-code-bin
       - spotify
       - obsidian
@@ -71,6 +72,7 @@
       - python-pywalfox
       - hyprpicker
       - otf-codenewroman-nerd
+      - noto-fonts-emoji
       - swaync
       - hypridle
       - hyprlock

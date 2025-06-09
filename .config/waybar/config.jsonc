@@ -1,0 +1,146 @@
+{
+    "layer": "top",
+    "position": "top",
+    "reload_style_on_change": true,
+    "modules-left": [
+        "custom/notification",
+        "clock",
+        "custom/pacman",
+        "tray",
+        "hyprland/workspaces"
+    ],
+    "modules-center": [
+	"hyprland/window"
+    ],
+    "modules-right": [
+	"cpu",
+	"memory",
+	"temperature",
+	"disk",
+	"custom/colorpicker",
+        "bluetooth",
+        "network",
+        "battery"
+    ],
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "format-icons": {
+            "active": "",
+            "default": "",
+            "empty": ""
+        },
+        "persistent-workspaces": {
+            "*": [
+                1,
+                2,
+                3,
+                4,
+                5
+            ]
+        }
+    },
+    "hyprland/window": {
+	"format": "{initialTitle}",
+	"icon": true,
+	"icon-size": 18
+    },
+    "custom/notification": {
+        "tooltip": false,
+        "format": "",
+        "on-click": "swaync-client -t -sw",
+        "escape": true
+    },
+    "clock": {
+        "format": "{:%H:%M:%S} ",
+        "interval": 1,
+        "tooltip-format": "<tt>{calendar}</tt>",
+        "calendar": {
+            "format": {
+                "today": "<span color='#fAfBfC'><b>{}</b></span>"
+            }
+        },
+        "actions": {
+            "on-click-right": "shift_down",
+            "on-click": "shift_up"
+        }
+    },
+    "network": {
+        "format-wifi": "",
+        "format-ethernet": "",
+        "format-disconnected": "",
+        "tooltip-format-disconnected": "Error",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
+        "tooltip-format-ethernet": "{ifname} 🖧 "
+    },
+    "bluetooth": {
+        "format-on": "󰂯",
+        "format-off": "BT-off",
+        "format-disabled": "󰂲",
+        "format-connected-battery": "{device_battery_percentage}% 󰂯",
+        "format-alt": "{device_alias} 󰂯",
+        "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}\n{device_address}",
+        "tooltip-format-enumerate-connected-battery": "{device_alias}\n{device_address}\n{device_battery_percentage}%",
+        "on-click-right": "blueman-manager"
+    },
+    "battery": {
+        "interval": 30,
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 20
+        },
+        "format": "{capacity}% {icon}",
+        "format-charging": "{capacity}% 󰂄",
+        "format-plugged": "{capacity}% 󰂄 ",
+        "format-alt": "{time} {icon}",
+        "format-icons": [
+            "󰁻",
+            "󰁼",
+            "󰁾",
+            "󰂀",
+            "󰂂",
+            "󰁹"
+        ]
+    },
+    "custom/pacman": {
+        "format": "󰅢 {}",
+        "interval": 60,
+        "exec": "checkupdates | wc -l",
+        "exec-if": "exit 0",
+        "signal": 8,
+        "tooltip": false
+    },
+    "custom/colorpicker": {
+        "format": "󰸌",
+	"on-click": "colorpicker",
+	"tooltip": false
+    },
+    "cpu": {
+	"format": " {usage}%",
+	"interval": 5,
+	"tooltip": true
+    },
+    "memory": {
+        "format": " {}%",
+	"interval": 5,
+	"tooltip-format": "{used:0.1f} GiB used ({total:0.1f} GiB total)\n{swapUsed:0.1f} GiB swapped ({swapTotal:0.1f} GiB total)"
+    },
+    "temperature": {
+        "format": " {temperatureC}°C",
+        "critical-threshold": 90,
+	"interval": 5,
+	"hwmon-path": "/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon2/temp1_input",
+	"tooltip": false
+    },
+    "disk": {
+	"format": "󱛟 {free}",
+	"interval": 30,
+	"tooltip-format": "{used} / {total} used ({free} available)"
+    },
+    "tray": {
+        "icon-size": 14,
+        "spacing": 10
+    }
+}
