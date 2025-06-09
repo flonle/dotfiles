@@ -1,0 +1,26 @@
+#!/bin/bash
+# Pass an image to set as wallpaper, or pass a directory to pick a random image from that directory.
+
+WALLPAPER_DIR="$HOME/wallpapers/"
+
+if [[ -z "$1" ]]; then
+    input="$WALLPAPER_DIR"
+else
+    input="$1"
+fi;
+
+# Get a random wallpaper that is not the current one
+if [[ -d "$input" ]]; then
+    current_wall=$(hyprctl hyprpaper listloaded)
+    wallpaper=$(find "$input" -type f ! -name "$(basename "$current_wall")" | shuf -n 1)
+else
+    wallpaper="$input"
+fi;
+
+echo "Setting new wallpaper: ${wallpaper}"
+hyprctl hyprpaper reload ,"$wallpaper"
+wal -i "$wallpaper" --cols16 -b 0e0e0e
+swaync-client --reload-css
+cat ~/.cache/wal/colors-kitty.conf > ~/.config/kitty/current-theme.conf
+pywalfox update
+

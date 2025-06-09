@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 # Depends on cliphist, wl-clipboard, and fzf
 
 cliphist list | fzf -d $'\t' --with-nth 2 | cliphist decode | wl-copy
