@@ -2,13 +2,15 @@ kitty trailing
 kitty jetbrains mono font
 waybar
 	- volume (https://github.com/Alexays/Waybar/wiki/Module:-PulseAudio-Slider -> pulseaudio)
-	- move workspaces widget to left
 	- tray with workspaces next to it looks ugly
 	- fix "no-controller" on bt widget
+	- middle waybar cell should be gone when empty
 fix dynamic-cursor plugin
 Decode on pywal
 	- pywalfox too much imo
 	- sometimes pywal colors ugly, perhaps another system
+	- with static background color it's kind of OK, try it out for now
+
 screenshot editing  & image viewing -> swappy is too slow, pinta crashes, swayimg is weird
 tumbler for thumbnails
 ranger?
@@ -18,3 +20,6 @@ wofi is ugly
 speedup and remove animations 
 test screensharing
 nmapplet?
+zsh setup
+nvim setup
+swaync mpris not showing spotify album cover
