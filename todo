@@ -1,5 +1,5 @@
-kitty trailing
-kitty jetbrains mono font
+kitty config?
+kitty jetbrains mono in terminal
 waybar
 	- volume (https://github.com/Alexays/Waybar/wiki/Module:-PulseAudio-Slider -> pulseaudio)
 	- tray with workspaces next to it looks ugly
@@ -14,12 +14,12 @@ Decode on pywal
 screenshot editing  & image viewing -> swappy is too slow, pinta crashes, swayimg is weird
 tumbler for thumbnails
 ranger?
-editor env var
-fix bug where many waybars are spawned after a while in locked state
-wofi is ugly
+fix bug where many waybars are spawned after a while in locked state - I think this is fixed now
+wofi is ugly - fzf?
 speedup and remove animations 
 test screensharing
 nmapplet?
-zsh setup
 nvim setup
 swaync mpris not showing spotify album cover
+add .zshrc symlink to ansible (symlink farm manager?)
+

@@ -46,6 +46,8 @@
       # Shell & Shenanigans
       - zsh
       - zsh-completions
+      - zsh-autosuggestions
+      - zsh-syntax-highlighting
       - starship
       - fzf
       - ripgrep
