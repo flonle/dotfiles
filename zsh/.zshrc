@@ -35,13 +35,17 @@ bindkey -M vicmd v edit-command-line
 bindkey '^H' backward-kill-word
 bindkey '5~' kill-word
 
+# PATH
+path+=("${HOME}/dotfiles/bin")
+export PATH
+
 # Plugins
 fpath=(path/to/zsh-completions/src $fpath)
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Prompt
-fpath=(~/dotfiles/zsh_fpath $fpath)
+fpath=(~/dotfiles/zsh/zsh_fpath $fpath)
 autoload -Uz zsh_prompt; zsh_prompt
 
 # fzf
@@ -53,6 +57,8 @@ alias gs='git status'
 alias ga='git add'
 alias gc='git commit'
 alias gl='git log'
+alias gf='git fetch'
+alias gp='git pull'
 alias ls='eza -a'
 alias ll='eza -al'
 
