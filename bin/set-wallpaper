@@ -1,7 +1,7 @@
 #!/bin/bash
 # Pass an image to set as wallpaper, or pass a directory to pick a random image from that directory.
 
-WALLPAPER_DIR="$HOME/wallpapers/"
+WALLPAPER_DIR="${HOME}/wallpapers/"
 
 if [[ -z "$1" ]]; then
     input="$WALLPAPER_DIR"
@@ -19,8 +19,7 @@ fi;
 
 echo "Setting new wallpaper: ${wallpaper}"
 hyprctl hyprpaper reload ,"$wallpaper"
-wal -i "$wallpaper" --cols16 -b 0e0e0e
+wal -n -s -t -i "$wallpaper" --cols16 -b 0e0e0e
 swaync-client --reload-css
-cat ~/.cache/wal/colors-kitty.conf > ~/.config/kitty/current-theme.conf
 pywalfox update
 

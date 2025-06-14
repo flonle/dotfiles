@@ -1,25 +1,15 @@
-kitty config?
-kitty jetbrains mono in terminal
 waybar
 	- volume (https://github.com/Alexays/Waybar/wiki/Module:-PulseAudio-Slider -> pulseaudio)
 	- tray with workspaces next to it looks ugly
 	- fix "no-controller" on bt widget
 	- middle waybar cell should be gone when empty
 fix dynamic-cursor plugin
-Decode on pywal
-	- pywalfox too much imo
-	- sometimes pywal colors ugly, perhaps another system
-	- with static background color it's kind of OK, try it out for now
-
-screenshot editing  & image viewing -> swappy is too slow, pinta crashes, swayimg is weird
-tumbler for thumbnails
-ranger?
-fix bug where many waybars are spawned after a while in locked state - I think this is fixed now
-wofi is ugly - fzf?
-speedup and remove animations 
+fix bug where many waybars are spawned after a while in locked state
+wofi is ugly and slow - fzf?
 test screensharing
 nmapplet?
 nvim setup
 swaync mpris not showing spotify album cover
 add .zshrc symlink to ansible (symlink farm manager?)
+neovim does not restore terminal cursor after exit -> add this behavior to nvim config
 

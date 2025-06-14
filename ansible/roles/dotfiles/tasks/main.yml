@@ -27,7 +27,8 @@
       - firefox
       - neovim
       - libreoffice-fresh
-      - kitty
+      - foot
+      - foot-terminfo
       - thunar
 
       # Bluetooth
@@ -44,10 +45,12 @@
       - nwg-look
 
       # Shell & Shenanigans
+      - ttf-jetbrains-mono
       - zsh
       - zsh-completions
       - zsh-autosuggestions
       - zsh-syntax-highlighting
+      - zsh-vi-mode
       - starship
       - fzf
       - ripgrep
