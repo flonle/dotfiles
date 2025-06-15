@@ -50,7 +50,7 @@
       - zsh-completions
       - zsh-autosuggestions
       - zsh-syntax-highlighting
-      - zsh-vi-mode
+      - glib2
       - starship
       - fzf
       - ripgrep

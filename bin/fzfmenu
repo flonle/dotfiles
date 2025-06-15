@@ -1,0 +1,23 @@
+#!/bin/bash
+# fzf rofi replacement
+
+app_dirs="/usr/share/applications/*.desktop $HOME/.local/share/applications/*.desktop"
+
+app_launcher() {
+    # Shell glob to find .desktop files, grep to extract 'Name=' and full path, pipe to 
+    # fzf and use ':Name=' as the delimiter so we don't even need sed.
+    # Yes grep is faster than ripgrep for this usecase.
+    # 'app_dirs' not quoted so parameter expansion CAN insert whitespace (to grep multiple paths).
+    grep -H -m1 --color=never '^Name=' $app_dirs 2>/dev/null | \
+    #sed 's/:Name=/|/' | \
+    fzf --delimiter=':Name=' \
+        --with-nth=2 \
+        --preview='echo {1}' \
+        --preview-window=up:1 \
+	--accept-nth=1
+}
+
+selected=$(app_launcher)
+# Trust me, you need setsid. Even with '& disown' there's a race condition, and I'm not sure why.
+setsid gio launch "$selected"
+

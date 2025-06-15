@@ -17,9 +17,14 @@ else
     wallpaper="$input"
 fi;
 
-echo "Setting new wallpaper: ${wallpaper}"
-hyprctl hyprpaper reload ,"$wallpaper"
-wal -n -s -t -i "$wallpaper" --cols16 -b 0e0e0e
+echo "Setting new wallpaper: ${wallpaper}..."
+while ! hyprctl hyprpaper reload , "$wallpaper"; do
+    sleep 0.1
+    echo 'Retrying hyprpaper IPC'
+    # Because at startup, this might run before the hyprpaper socket exists
+done
+wal -nsti "$wallpaper" --cols16 -b 0e0e0e
 swaync-client --reload-css
 pywalfox update
+echo 'wallpaper set!'
 
