@@ -11,4 +11,4 @@ nvim setup
 swaync mpris not showing spotify album cover
 add .zshrc symlink to ansible (symlink farm manager?)
 neovim does not restore terminal cursor after exit -> add this behavior to nvim config
-replace pyprland
+kitty seems to rerender when resized... foot does not

@@ -11,7 +11,7 @@
   pacman:
     name:
       # System utilities
-      - htop
+      - btop
       - brightnessctl
       - git
 
@@ -35,13 +35,10 @@
       - blueman
       - bluez
 
-      # Wayland/Hyprland
       - hyprland
-      - wofi
       - waybar
       - hyprpaper
 
-      # Theming
       - nwg-look
 
       # Shell & Shenanigans
@@ -84,7 +81,6 @@
       - qogir-icon-theme
       - materia-dark
       - hyprshot
-      - pyprland
       - cliphist
     use: "{{ aur_helper }}"
     state: present

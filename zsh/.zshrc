@@ -29,6 +29,7 @@ export EDITOR="nvim"
 export VISUAL="nvim"
 autoload -Uz edit-command-line
 zle -N edit-command-line
+bindkey -e
 bindkey '^V' edit-command-line
 
 # ----- Keybinds
@@ -54,8 +55,8 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # ----- Prompt
-fpath=(~/dotfiles/zsh/zsh_fpath $fpath)
-autoload -Uz zsh_prompt; zsh_prompt
+#fpath=(~/dotfiles/zsh/zsh_fpath $fpath)
+#autoload -Uz zsh_prompt; zsh_prompt
 
 # ----- fzf
 source /usr/share/fzf/completion.zsh
@@ -93,4 +94,7 @@ function y() {
 # ----- Directory history command 'd'
 alias d='dirs -v'
 for index ({1..9}) alias "$index"="cd +${index}"; unset index
+
+# Prompt
+eval "$(starship init zsh)"
 
