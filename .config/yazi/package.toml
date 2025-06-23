@@ -1,0 +1,12 @@
+[[plugin.deps]]
+use = "yazi-rs/plugins:piper"
+rev = "3d1efb7"
+hash = "2143a53182dbbe935a1abd1623424aa5"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:smart-enter"
+rev = "3d1efb7"
+hash = "56fdabc96fc1f4d53c96eb884b02a5be"
+
+[flavor]
+deps = []

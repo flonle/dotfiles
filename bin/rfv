@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # 1. Search for text in files using Ripgrep
 # 2. Interactively narrow down the list using fzf
@@ -10,4 +10,3 @@ rg --color=always --line-number --no-heading --smart-case "${*:-}" |
       --preview 'bat --color=always {1} --highlight-line {2}' \
       --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' \
       --bind 'enter:become(vim {1} +{2})'
-

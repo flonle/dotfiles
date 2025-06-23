@@ -4,7 +4,7 @@
 app_dirs="/usr/share/applications/*.desktop $HOME/.local/share/applications/*.desktop"
 
 app_launcher() {
-    # Shell glob to find .desktop files, grep to extract 'Name=' and full path, pipe to 
+    # Shell glob to find .desktop files, grep to extract 'Name=' and full path, pipe to
     # fzf and use ':Name=' as the delimiter so we don't even need sed.
     # Yes grep is faster than ripgrep for this usecase.
     # 'app_dirs' not quoted so parameter expansion CAN insert whitespace (to grep multiple paths).
@@ -20,4 +20,3 @@ app_launcher() {
 selected=$(app_launcher)
 # Trust me, you need setsid. Even with '& disown' there's a race condition, and I'm not sure why.
 setsid gio launch "$selected"
-

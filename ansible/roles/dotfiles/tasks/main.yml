@@ -10,12 +10,10 @@
   become_user: root
   pacman:
     name:
-      # System utilities
       - btop
       - brightnessctl
       - git
 
-      # Audio stack
       - pipewire
       - pipewire-pulse
       - pipewire-alsa
@@ -23,7 +21,6 @@
       - pavucontrol
       - pulsemixer
 
-      # Applications
       - firefox
       - neovim
       - libreoffice-fresh
@@ -31,7 +28,6 @@
       - foot-terminfo
       - thunar
 
-      # Bluetooth
       - blueman
       - bluez
 
@@ -41,7 +37,6 @@
 
       - nwg-look
 
-      # Shell & Shenanigans
       - ttf-jetbrains-mono
       - zsh
       - zsh-completions
@@ -82,6 +77,8 @@
       - materia-dark
       - hyprshot
       - cliphist
+      - hexyl
+      - glow
     use: "{{ aur_helper }}"
     state: present
 
