@@ -72,7 +72,7 @@
 
                 {
                     "label": "",
-                    "command": "kitty nmtui"
+                    "command": "foot nmtui"
                 },
                 {
                     "label": "",
