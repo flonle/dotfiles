@@ -25,8 +25,8 @@ setopt PUSHD_SILENT
 # Surprisingly enough, I don't use Vi mode. I find it clunky at best, and while
 # plugins like zsh-vi-mode fix a lot, some things remain (like an annoying mode-switch delay).
 # Instead, I rely on ^V to edit the current command in nvim.
-export EDITOR="nvim"
-export VISUAL="nvim"
+export EDITOR="helix"
+export VISUAL="helix"
 autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey -e
