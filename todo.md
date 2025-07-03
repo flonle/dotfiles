@@ -14,4 +14,6 @@
 - newline before prompt option in starship is really nice when using term, but looks awful when spawning a new one. Is there a fix?
 - Remove duplicates in multiple /application directories for fzf-launcher
 - document or automate the firefox profile with the userchrome.css. Either in the ai window script or in ansible.
+- Add symlink for wallpapers in home dir (dont forget automatic backup)
+- document the 'need' for pywalfox
 
