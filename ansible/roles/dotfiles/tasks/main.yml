@@ -74,6 +74,8 @@
       - cliphist
       - hexyl
       - glow
+      - yazi
+      - helix
     use: "{{ aur_helper }}"
     state: present
 
