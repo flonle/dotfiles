@@ -72,6 +72,7 @@ alias gp='git pull'
 alias ls='eza -a'
 alias ll='eza -al'
 alias img='img2sixel'
+alias hx='helix'
 
 # ----- Functions
 # Install packages using yay
