@@ -1,19 +1,14 @@
 # TODO
 
-- waybar
-    - volume (https://github.com/Alexays/Waybar/wiki/Module:-PulseAudio-Slider -> pulseaudio)
-    - tray with workspaces next to it looks ugly
-    - fix "no-controller" on bt widget
-    - middle waybar cell should be gone when empty
-- fix dynamic-cursor plugin
-- fix bug where many waybars are spawned after a while in locked state
-- nmapplet?
+- waybar: fix "no-controller" on bt widget, just hide if no controller
+- fix bug where many waybars are spawned after a while in locked state (has something to do with monitors, dpms?) 
 - swaync mpris not showing spotify album cover
 - add .zshrc symlink to ansible (symlink farm manager?)
-- neovim does not restore terminal cursor after exit -> add this behavior to nvim config
-- newline before prompt option in starship is really nice when using term, but looks awful when spawning a new one. Is there a fix?
 - Remove duplicates in multiple /application directories for fzf-launcher
 - document or automate the firefox profile with the userchrome.css. Either in the ai window script or in ansible.
 - Add symlink for wallpapers in home dir (dont forget automatic backup)
 - document the 'need' for pywalfox
-
+- set gtk themes programmatically, without nwg-look (can stay as an extra dependecy)
+- use normal bash script instead of ansible... (idempotic!)
+- install & enable hyprland cursor plugin in aforementioned script
+- multimonitor -> how?

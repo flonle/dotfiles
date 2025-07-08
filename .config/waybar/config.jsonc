@@ -7,22 +7,48 @@
         "clock",
         "custom/pacman",
         "tray",
-        "hyprland/workspaces"
+        "hyprland/window"
     ],
     "modules-center": [
-	"hyprland/window"
+        "hyprland/workspaces"
     ],
     "modules-right": [
-	"cpu",
-	"memory",
-	"temperature",
-	"disk",
-	"custom/colorpicker",
+        "cpu",
+        "memory",
+        "temperature",
+        "custom/colorpicker",
+        "pulseaudio",
+        "disk",
+        "backlight",
         "bluetooth",
         "network",
         "battery"
     ],
-
+    "backlight": {
+        "device": "intel_backlight",
+        "format": "{icon}",
+        "tooltip-format": "Brigtness: {percent}%",
+        "format-icons": ["󰃞", "󰃝", "󰃟", "󰃠"]
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "",
+        "format-icons": {
+            "alsa_output.pci-0000_00_1f.3.analog-stereo": "",
+            "alsa_output.pci-0000_00_1f.3.analog-stereo-muted": "",
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "phone-muted": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "scroll-step": 5,
+        "on-click": "pavucontrol",
+        "ignored-sinks": ["Easy Effects Sink"]
+    },
     "hyprland/workspaces": {
         "format": "{icon}",
         "format-icons": {
@@ -41,9 +67,9 @@
         }
     },
     "hyprland/window": {
-	"format": "{initialTitle}",
-	"icon": true,
-	"icon-size": 18
+        "format": "{initialTitle}",
+        "icon": true,
+        "icon-size": 18
     },
     "clock": {
         "format": "{:%H:%M:%S} ",
@@ -64,15 +90,13 @@
         "format-ethernet": "",
         "format-disconnected": "",
         "tooltip-format-disconnected": "Error",
-        "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%)",
         "tooltip-format-ethernet": "{ifname} 🖧 "
     },
     "bluetooth": {
         "format-on": "󰂯",
-        "format-off": "BT-off",
+        "format-off": "󰂲",
         "format-disabled": "󰂲",
-        "format-connected-battery": "{device_battery_percentage}% 󰂯",
-        "format-alt": "{device_alias} 󰂯",
         "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
         "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}\n{device_address}",
@@ -86,9 +110,9 @@
             "warning": 30,
             "critical": 20
         },
-        "format": "{capacity}% {icon}",
-        "format-charging": "{capacity}% 󰂄",
-        "format-plugged": "{capacity}% 󰂄 ",
+        "format": "{icon} {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+        "format-plugged": "󰂄 {capacity}%",
         "format-alt": "{time} {icon}",
         "format-icons": [
             "󰁻",
@@ -107,55 +131,50 @@
         "signal": 8,
         "tooltip": false
     },
-    "custom/colorpicker": {
-        "format": "󰸌",
-	"on-click": "colorpicker",
-	"tooltip": false
-    },
     "cpu": {
-	"format": " {usage}%",
-	"interval": 5,
-	"tooltip": true
+        "format": " {usage}%",
+        "interval": 5,
+        "tooltip": true
     },
     "memory": {
         "format": " {}%",
-	"interval": 5,
-	"tooltip-format": "{used:0.1f} GiB used ({total:0.1f} GiB total)\n{swapUsed:0.1f} GiB swapped ({swapTotal:0.1f} GiB total)"
+        "interval": 5,
+        "tooltip-format": "{used:0.1f} GiB used ({total:0.1f} GiB total)\n{swapUsed:0.1f} GiB swapped ({swapTotal:0.1f} GiB total)"
     },
     "temperature": {
         "format": " {temperatureC}°C",
         "critical-threshold": 90,
-	"interval": 5,
-	"hwmon-path": "/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon2/temp1_input",
-	"tooltip": false
+        "interval": 5,
+        "hwmon-path": "/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon2/temp1_input",
+        "tooltip": false
     },
     "disk": {
-	"format": "󱛟 {free}",
-	"interval": 30,
-	"tooltip-format": "{used} / {total} used ({free} available)"
+        "format": "󱛟",
+        "interval": 120,
+        "tooltip-format": "{used} / {total} used ({free} available)"
     },
     "tray": {
         "icon-size": 14,
         "spacing": 10
     },
     "custom/notification": {
-	"tooltip": false,
-	"format": "{icon}",
-	"format-icons": {
-	    "notification": "<span foreground='red'><sup></sup></span>",
-	    "none": "",
-	    "dnd-notification": "<span foreground='red'><sup></sup></span>",
-	    "dnd-none": "",
-	    "inhibited-notification": "<span foreground='red'><sup></sup></span>",
-	    "inhibited-none": "",
-	    "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
-	    "dnd-inhibited-none": ""
+        "tooltip": false,
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "<span foreground='red'><sup></sup></span>",
+            "none": "",
+            "dnd-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-none": "",
+            "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "inhibited-none": "",
+            "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-inhibited-none": ""
         },
-	"return-type": "json",
-	"exec-if": "which swaync-client",
-	"exec": "swaync-client -swb",
-	"on-click": "swaync-client -t -sw",
-	"on-click-right": "swaync-client -d -sw",
-	"escape": true
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
     }
 }

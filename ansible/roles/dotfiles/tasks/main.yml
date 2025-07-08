@@ -69,13 +69,14 @@
       - hypridle
       - hyprlock
       - qogir-icon-theme
-      - materia-dark
+      - materia-gtk-theme
       - hyprshot
       - cliphist
       - hexyl
       - glow
       - yazi
       - helix
+      - rose-pine-hyprcursor
     use: "{{ aur_helper }}"
     state: present
 
