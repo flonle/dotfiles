@@ -7,6 +7,9 @@ line-number = "relative"
 bufferline = "multiple"
 scrolloff = 15
 
+[editor.whitespace.render]
+newline = "all"
+
 [editor.inline-diagnostics]
 cursor-line = "hint"
 other-lines = "disable"
@@ -60,12 +63,14 @@ C-b = ':sh cd "$(pwd)/$(dirname %{buffer_name})" && git log -n 5 --format="forma
 
 [keys.insert]
 C-s = "normal_mode"  # double tap s for normal mode + save buffer
-C-backspace = "delete_word_backward"
-C-del = "delete_word_forward"
 C-right = "move_next_word_start"
 C-left = "move_prev_word_start"
+C-del = "delete_word_forward"
+C-backspace = "delete_word_backward"
 
 [keys.normal."+"]
-a = ":run-shell-command echo test"
-d = ":pipe cat"
-g = ":insert-output cat poop"
+c = [
+  ":insert-output snippet-changelog-entry %{buffer_name}",
+  "collapse_selection",
+  "insert_mode"
+]

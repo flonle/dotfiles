@@ -23,4 +23,4 @@ language-servers = ["markdown-oxide", "harper-ls"]
 name = "python"
 language-servers = ["ruff", "harper-ls"]
 formatter = { command = "ruff", args = ["format", "-"] }
-auto-format = true
+auto-format = false

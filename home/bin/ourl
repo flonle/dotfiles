@@ -1,0 +1,23 @@
+#!/bin/sh
+
+if [ -z "$1" ]; then
+    read input
+else
+    input="$1"
+fi
+type="${input%"${input#?}"}"
+id="${input#?}"
+
+case "$type" in
+  t|T)
+    echo "https://www.accomodata.be/web#id=${id}&model=project.task&view_type=form"
+    ;;
+  h|H)
+    echo "https://www.accomodata.be/web#id=${id}&model=helpdesk.ticket&view_type=form"
+    ;;
+  *)
+    echo "Unknown type ${type}" >&2
+    exit 1
+    ;;
+esac
+  

@@ -48,6 +48,7 @@ bindkey '^U' undo  # CTRL U
 
 # ----- PATH
 path+=("${HOME}/bin")
+path+=("${HOME}/acco/tools")
 export PATH
 
 # ----- Plugins
@@ -67,7 +68,7 @@ source /usr/share/fzf/key-bindings.zsh
 alias gs='git status'
 alias ga='git add'
 alias gc='git commit'
-alias gl='git log'
+alias gl='git glog'
 alias gf='git fetch'
 alias gp='git pull'
 alias ls='eza -a'
@@ -75,6 +76,10 @@ alias ll='eza -al'
 alias img='img2sixel'
 alias hx='helix'
 alias py='ipython'
+alias rs='runserver'
+alias rsdb='runserver --debugpy --local-odoo-source'
+alias ts='timesheets'
+alias workon='cd "${HOME}/proj/$(ls ~/proj | fzf)"'
 
 # ----- Functions
 # Install packages using yay
@@ -87,11 +92,14 @@ function yayre() {
 }
 # yazi alias + exist at yazi's directory
 function y() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-	yazi "$@" --cwd-file="$tmp"
-	IFS= read -r -d '' cwd < "$tmp"
-	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
-	rm -f -- "$tmp"
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+    yazi "$@" --cwd-file="$tmp"
+    IFS= read -r -d '' cwd < "$tmp"
+    [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+    rm -f -- "$tmp"
+}
+function see() {
+    ourl "$1" | xargs xdg-open
 }
 
 # Directory history command 'd'
@@ -117,3 +125,5 @@ function chpwd-osc7-pwd() {
 }
 add-zsh-hook -Uz chpwd chpwd-osc7-pwd
 
+# Random ther env vars
+export GOOGLE_CLOUD_PROJECT="gen-lang-client-0456610102"

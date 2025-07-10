@@ -1,0 +1,28 @@
+#!/bin/bash
+
+pids=()
+
+# Use process substitution to avoid the subshell issue with pipes
+while IFS= read -r -d '' gitdir; do
+    # Get the parent directory of the .git folder (the actual repository)
+    repo_dir="$(dirname "$gitdir")"
+
+    # Process each repository as bg job
+    (
+        cd "$repo_dir" || exit
+        current_branch=$(git branch --show-current)
+        echo "Updating repository: $repo_dir (branch: $current_branch)"
+        git pull
+        echo "Finished updating: $repo_dir"
+    ) &
+
+    # Store process ID
+    pids+=($!)
+done < <(find . -type d -name ".git" -print0)
+
+# Wait for all background processes to complete
+for pid in "${pids[@]}"; do
+    wait $pid
+done
+
+echo "All repositories have been updated!"

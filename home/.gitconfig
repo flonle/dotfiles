@@ -1,3 +1,6 @@
+[user]
+	email = florian.laporte@accomodata.be
+	name = Florian Laporte
 [init]
 	defaultBranch = main
 [fetch]
