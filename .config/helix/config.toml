@@ -1,8 +1,11 @@
 theme = "catppuccin_frappe"
 
+# ----- Editor
+
 [editor]
 line-number = "relative"
 bufferline = "multiple"
+scrolloff = 15
 
 [editor.cursor-shape]
 normal = "block"
@@ -10,11 +13,29 @@ insert = "bar"
 select = "block"
 
 [editor.statusline]
-left = ["mode", "spinner"]
-center = ["file-name"]
-right = ["diagnostics", "selections", "position", "file-encoding", "file-line-ending", "file-type"]
+left = ["file-name", "file-modification-indicator", "file-type", "read-only-indicator"]
+center = ["diagnostics", "spinner"]
+right = ["version-control", "spacer", "position", "total-line-numbers"]
 separator = "│"
-mode.normal = "NORMAL"
-mode.insert = "INSERT"
-mode.select = "SELECT"
 
+
+# ----- Keys
+
+[keys.normal]
+C-s = ":write"
+A-s = "save_selection"  # jumplist save
+C-h = "jump_view_left"
+C-j = "jump_view_down"
+C-k = "jump_view_up"
+C-l = "jump_view_right"
+
+[keys.insert]
+C-s = "normal_mode"
+C-backspace = "delete_word_backward"
+C-del = "delete_word_forward"
+C-right = "move_next_word_start"
+C-left = "move_prev_word_start"
+
+[keys.normal."+"]
+a = ":run-shell-command echo test"
+d = ":pipe cat"
