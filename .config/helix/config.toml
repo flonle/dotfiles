@@ -7,6 +7,14 @@ line-number = "relative"
 bufferline = "multiple"
 scrolloff = 15
 
+[editor.inline-diagnostics]
+cursor-line = "hint"
+other-lines = "error"
+prefix-len = 2
+
+[editor.soft-wrap]
+enable = true
+
 [editor.cursor-shape]
 normal = "block"
 insert = "bar"
@@ -17,6 +25,11 @@ left = ["file-name", "file-modification-indicator", "file-type", "read-only-indi
 center = ["diagnostics", "spinner"]
 right = ["version-control", "spacer", "position", "total-line-numbers"]
 separator = "│"
+
+[editor.indent-guides]
+render = true
+character = "╎"  # Some characters that work well: "▏", "┆", "┊", "⸽"
+skip-levels = 1
 
 
 # ----- Keys
