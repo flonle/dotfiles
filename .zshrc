@@ -48,6 +48,8 @@ bindkey '^U' undo  # CTRL U
 
 # ----- PATH
 path+=("${HOME}/dotfiles/bin")
+path+=("${HOME}/.cargo/bin")
+path+=("${HOME}/go/bin")
 export PATH
 
 # ----- Plugins
