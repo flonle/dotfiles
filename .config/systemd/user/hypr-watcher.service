@@ -1,0 +1,14 @@
+[Unit]
+Description=Hyprland Event Watcher
+After=hyprland-session.target
+Wants=hyprland-session.target
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=%h/dotfiles/bin/hypr-watcher
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=default.target

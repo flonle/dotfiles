@@ -28,11 +28,6 @@ var eventHandlers = []EventHandler{
 		EventTypes: []string{"monitorremovedv2", "monitoraddedv2"},
 		Func:       func(event Event) {},
 	},
-	{
-		Name:       "Test",
-		EventTypes: []string{"activewindowv2", "activewindow"},
-		Func:       func(event Event) {},
-	},
 }
 
 func main() {
