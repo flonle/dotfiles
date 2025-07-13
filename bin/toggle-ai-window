@@ -1,12 +1,12 @@
-#!/bin/bash
-# Toggle a persistent scratchpad terminal. Is only ever terminated when the window is closed manually.
+#!/bin/sh
+# Toggle a persistent scratchpad browser instance hosting an LLM chat.
+# Is only ever terminated when the window is closed manually.
 
 workspace_of_window=$(hyprctl clients -j | jq -r '.[] | select (.initialClass=="ai-window-ff") | .workspace.name')
-if [[ -z "$workspace_of_window" ]]; then
+if [ -z "$workspace_of_window" ]; then
   # Means window does not exist yet -> start it
   firefox -P ai-window --name ai-window-ff https://kagi.com/assistant &
-  disown
-elif [[ "$workspace_of_window" = 'special:scratch' ]]; then
+elif [ "$workspace_of_window" = 'special:scratch' ]; then
   # Currently hidden -> unhide
   hyprctl --batch \
     'dispatch movetoworkspacesilent 1,initialclass:ai-window-ff ; ' \

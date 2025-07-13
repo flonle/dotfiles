@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 # Clippy!
 
 cliphist list | \
-fzf --delimiter=$'\t' --with-nth=2 --preview='echo Clipboard History' --preview-window=up:1 | \
+fzf --delimiter='\t' --with-nth=2 --preview='echo Clipboard History' --preview-window=up:1 | \
 cliphist decode | \
 wl-copy

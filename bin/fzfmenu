@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # fzf rofi replacement
 
 app_dirs="/usr/share/applications/*.desktop $HOME/.local/share/applications/*.desktop"
@@ -9,12 +9,11 @@ app_launcher() {
     # Yes grep is faster than ripgrep for this usecase.
     # 'app_dirs' not quoted so parameter expansion CAN insert whitespace (to grep multiple paths).
     grep -H -m1 --color=never '^Name=' $app_dirs 2>/dev/null | \
-    #sed 's/:Name=/|/' | \
     fzf --delimiter=':Name=' \
         --with-nth=2 \
         --preview='echo {1}' \
         --preview-window=up:1 \
-	--accept-nth=1
+	      --accept-nth=1
 }
 
 selected=$(app_launcher)

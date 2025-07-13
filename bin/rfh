@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/bin/sh
+# RFH: Ripgrep -> fzf -> Helix
 
 # 1. Search for text in files using Ripgrep
 # 2. Interactively narrow down the list using fzf
@@ -9,4 +10,4 @@ rg --color=always --line-number --no-heading --smart-case "${*:-}" |
       --delimiter : \
       --preview 'bat --color=always {1} --highlight-line {2}' \
       --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' \
-      --bind 'enter:become(vim {1} +{2})'
+      --bind 'enter:become(helix {1} +{2})'

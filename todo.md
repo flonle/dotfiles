@@ -12,3 +12,4 @@
 - use normal bash script instead of ansible... (idempotic!)
 - install & enable hyprland cursor plugin in aforementioned script
 - multimonitor -> how?
+- Dash as dependency + symlink /bin/sh to /bin/dash in setup script

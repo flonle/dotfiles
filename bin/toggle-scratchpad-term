@@ -1,12 +1,11 @@
-#!/bin/bash
+#!/bin/sh
 # Toggle a persistent scratchpad terminal. Is only ever terminated when the window is closed manually.
 
 scratchpad_workspace=$(hyprctl clients -j | jq -r '.[] | select (.title=="foot_scratchpad") | .workspace.name')
-if [[ -z "$scratchpad_workspace" ]]; then
+if [ -z "$scratchpad_workspace" ]; then
   # Means window does not exist yet -> start it
   setsid foot -T foot_scratchpad &
-  disown
-elif [[ "$scratchpad_workspace" = 'special:scratch' ]]; then
+elif [ "$scratchpad_workspace" = 'special:scratch' ]; then
   # Currently hidden -> unhide
   hyprctl --batch \
     'dispatch movetoworkspacesilent 1,title:foot_scratchpad ; ' \
