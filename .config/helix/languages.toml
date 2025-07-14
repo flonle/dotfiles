@@ -1,4 +1,26 @@
+[language-server.harper-ls]
+command = "harper-ls"
+args = ["--stdio"]
+
+
+# ----- Languages
+
 [[language]]
 name = "go"
 indent = { tab-width = 4, unit = " "}
-formatter = { command = "gofmt" }
+formatter = { command = "gofumpt" }
+auto-format = true
+language-servers = ["gopls", "harper-ls"]
+
+[language-server.gopls.config]
+gofumpt = true
+
+[[language]]
+name = "markdown"
+language-servers = ["markdown-oxide", "harper-ls"]
+
+[[language]]
+name = "python"
+language-servers = ["ruff", "harper-ls"]
+formatter = { command = "ruff", args = ["format", "-"] }
+auto-format = true

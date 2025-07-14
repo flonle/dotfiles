@@ -1,6 +1,5 @@
 # TODO
 
-- waybar: fix "no-controller" on bt widget, just hide if no controller
 - fix bug where many waybars are spawned after a while in locked state (has something to do with monitors, dpms?) 
 - swaync mpris not showing spotify album cover
 - add .zshrc symlink to ansible (symlink farm manager?)
@@ -11,5 +10,6 @@
 - set gtk themes programmatically, without nwg-look (can stay as an extra dependecy)
 - use normal bash script instead of ansible... (idempotic!)
 - install & enable hyprland cursor plugin in aforementioned script
-- multimonitor -> how?
+- multimonitor...
 - Dash as dependency + symlink /bin/sh to /bin/dash in setup script
+- Enable systemd service hypr-watcher in setup script
