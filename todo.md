@@ -4,7 +4,7 @@
 - swaync mpris not showing spotify album cover
 - add .zshrc symlink to ansible (symlink farm manager?)
 - Remove duplicates in multiple /application directories for fzf-launcher
-- document or automate the firefox profile with the userchrome.css. Either in the ai window script or in ansible.
+- Document or automate the Firefox profile with the userchrome.css. Either in the AI window script or in Ansible.
 - Add symlink for wallpapers in home dir (dont forget automatic backup)
 - document the 'need' for pywalfox
 - set gtk themes programmatically, without nwg-look (can stay as an extra dependecy)
@@ -13,3 +13,5 @@
 - multimonitor...
 - Dash as dependency + symlink /bin/sh to /bin/dash in setup script
 - Enable systemd service hypr-watcher in setup script
+- add .gitconfig symlink in script
+- Add git-delta as dependency
