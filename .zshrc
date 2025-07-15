@@ -38,7 +38,7 @@ bindkey '^V' edit-command-line
 bindkey '^[[3~' delete-char  # Del
 #bindkey '^R'  # <- this is set by the fzf source down below
 bindkey '^H' backward-kill-word  # CTRL backspace
-bindkey '5~' kill-word  # CTRL delete
+bindkey '^[[3;5~' kill-word  # CTRL delete
 bindkey "^[[1;5D" backward-word  # CTRL left arrow
 bindkey "^[[1;5C" forward-word  # CTRL right arrow
 bindkey '^[[H' beginning-of-line  # Home
