@@ -51,6 +51,7 @@ C-e = [
 C-b = ":sh git log -n 5 --format='format:%%h (%%an: %%ar) %%s' --no-patch -L%{cursor_line},+1:%{buffer_name}"
 C-t = ':sh footclient'
 S-t = ':sh footclient -D $(dirname %{buffer_name})'
+C-n = 'extend_search_next'
 
 [keys.insert]
 C-s = "normal_mode"
