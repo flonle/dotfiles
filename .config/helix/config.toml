@@ -41,6 +41,16 @@ C-h = "jump_view_left"
 C-j = "jump_view_down"
 C-k = "jump_view_up"
 C-l = "jump_view_right"
+C-e = [
+  ':sh rm -f /tmp/helix_yazi_chooser_file_uniq',
+  ':insert-output yazi %{buffer_name} --chooser-file=/tmp/helix_yazi_chooser_file_uniq',
+  ':insert-output echo "\x1b[?1049h\x1b[?2004h" > /dev/tty',
+  ':open %sh{cat /tmp/helix_yazi_chooser_file_uniq}',
+  ':redraw',
+]
+C-b = ":sh git log -n 5 --format='format:%%h (%%an: %%ar) %%s' --no-patch -L%{cursor_line},+1:%{buffer_name}"
+C-t = ':sh footclient'
+S-t = ':sh footclient -D $(dirname %{buffer_name})'
 
 [keys.insert]
 C-s = "normal_mode"
@@ -52,3 +62,4 @@ C-left = "move_prev_word_start"
 [keys.normal."+"]
 a = ":run-shell-command echo test"
 d = ":pipe cat"
+g = ":insert-output cat poop"
