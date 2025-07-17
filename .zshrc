@@ -21,16 +21,17 @@ setopt AUTO_PUSHD
 setopt PUSHD_IGNORE_DUPS
 setopt PUSHD_SILENT
 
-# ----- Vi
+# ----- Vi / Helix
 # Surprisingly enough, I don't use Vi mode. I find it clunky at best, and while
-# plugins like zsh-vi-mode fix a lot, some things remain (like an annoying mode-switch delay).
-# Instead, I rely on ^V to edit the current command in nvim.
+# plugins like zsh-vi-mode fix a lot, some things remain (like an annoying mode-switch delay,
+# even with a tweaked KEYTIMEOUT).
+# Instead, I rely on ^E to *E*dit the current command in Helix.
 export EDITOR="helix"
 export VISUAL="helix"
 autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey -e
-bindkey '^V' edit-command-line
+bindkey '^E' edit-command-line
 
 # ----- Keybinds
 # I'd make a custom keymap, but unfortunately many plugins will boldy
