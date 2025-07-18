@@ -74,6 +74,7 @@ alias ls='eza -a'
 alias ll='eza -al'
 alias img='img2sixel'
 alias hx='helix'
+alias py='ipython'
 
 # ----- Functions
 # Install packages using yay
