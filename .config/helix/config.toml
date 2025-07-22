@@ -42,8 +42,8 @@ C-h = "jump_view_left"
 C-j = "jump_view_down"
 C-k = "jump_view_up"
 C-l = "jump_view_right"
-C-t = ':sh footclient'  # term
-S-t = ':sh footclient -D $(dirname %{buffer_name})'  # term in cwd
+C-t = ':sh foot'  # term
+S-t = ':sh foot -D $(dirname %{buffer_name})'  # term in cwd
 # Yazi!:
 C-e = [
   ':sh rm -f /tmp/helix_yazi_chooser_file_uniq',
@@ -56,7 +56,7 @@ C-e = [
 # (instread of entering select mode, going to next search result, and leaving select mode):
 C-n = 'extend_search_next' 
 # Git blame current line, multiple commits:
-C-b = ":sh git log -n 5 --format='format:%%h (%%an: %%ar) %%s' --no-patch -L%{cursor_line},+1:%{buffer_name}"
+C-b = ':sh cd "$(pwd)/$(dirname %{buffer_name})" && git log -n 5 --format="format:%%h (%%an: %%ar) %%s" --no-patch -L%{cursor_line},+1:$(basename %{buffer_name})'
 
 [keys.insert]
 C-s = "normal_mode"  # double tap s for normal mode + save buffer
