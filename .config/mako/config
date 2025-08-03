@@ -1,0 +1,26 @@
+background-color=#34343433
+text-color=#d8dee9
+progress-color=#ffffff33
+border-size=0
+border-radius=10
+font=CodeNewRoman Nerd Font Propo
+anchor=top-right
+margin=10
+padding=15
+width=350
+height=100
+default-timeout=5000
+ignore-timeout=1
+max-visible=3
+layer=overlay
+max-history=100
+group-by=app-name
+
+[app-name="Spotify"]
+invisible=1
+
+[urgency=critical]
+default-timeout=0
+
+[mode=dnd]
+invisible=1

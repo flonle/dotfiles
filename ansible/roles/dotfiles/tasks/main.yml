@@ -76,7 +76,7 @@
       - glow
       - yazi
       - helix
-      - rose-pine-hyprcursor
+      - bibata-cursor-theme-bin
     use: "{{ aur_helper }}"
     state: present
 

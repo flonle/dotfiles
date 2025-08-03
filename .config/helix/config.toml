@@ -9,7 +9,7 @@ scrolloff = 15
 
 [editor.inline-diagnostics]
 cursor-line = "hint"
-other-lines = "error"
+other-lines = "disable"
 prefix-len = 2
 
 [editor.soft-wrap]

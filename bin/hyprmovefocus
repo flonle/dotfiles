@@ -1,0 +1,11 @@
+#!/bin/sh
+# Conditional movefocus command: if the currently active window is floating,
+# emit a 'cyclnext prev' instead. This costs us a good 4ms, with dash,
+# compared to the built-in movefocus :(
+
+is_floating=$(hyprctl activewindow -j | jq -r '.floating')
+if [ "$is_floating" = 'true' ]; then
+    hyprctl dispatch cyclenext prev hist
+else
+    hyprctl dispatch movefocus "$1"
+fi

@@ -6,15 +6,27 @@ if [ -z "$scratchpad_workspace" ]; then
   # Means window does not exist yet -> start it
   setsid foot -T foot_scratchpad &
 elif [ "$scratchpad_workspace" = 'special:scratch' ]; then
-  # Currently hidden -> unhide
+  # Currently hidden -> unhide & focus
   hyprctl --batch \
     'dispatch movetoworkspacesilent 1,title:foot_scratchpad ; ' \
     'dispatch pin title:foot_scratchpad ; ' \
     'dispatch focuswindow title:foot_scratchpad'
 else
-  # Currently visible -> hide
-  hyprctl --batch \
-    'dispatch pin title:foot_scratchpad ; ' \
-    'dispatch movetoworkspacesilent special:scratch,title:foot_scratchpad ; ' \
-    'dispatch cyclenext prev'
+  # Currently visible
+  
+  # Dont use focusHistoryID here - it does not always coincide with the actual
+  # active window!
+  active_window_title=$(hyprctl activewindow -j | jq -r '.title')
+  if [ "$active_window_title" = 'foot_scratchpad' ]; then
+    # Currently focused -> hide
+    hyprctl --batch \
+      'dispatch cyclenext prev hist ; ' \
+      'dispatch pin title:foot_scratchpad ; ' \
+      'dispatch movetoworkspacesilent special:scratch,title:foot_scratchpad'
+    # Note: cyclenext needs to come first; the other commands do something weird with the focus history
+  else
+    # Currently NOT focused -> focus
+    hyprctl dispatch focuswindow title:foot_scratchpad
+  fi
+
 fi

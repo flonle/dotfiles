@@ -24,7 +24,6 @@ while ! hyprctl hyprpaper reload , "$wallpaper"; do
     # Because at startup, this might run before the hyprpaper socket exists
 done
 wal -nsti "$wallpaper" --cols16 -b 0e0e0e
-swaync-client --reload-css
 pywalfox update
 echo 'wallpaper set!'
 

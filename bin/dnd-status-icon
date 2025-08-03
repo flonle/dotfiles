@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if makoctl mode 2>/dev/null | grep -q 'dnd'; then
+    echo 
+else
+    echo 
+fi

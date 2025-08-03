@@ -2,20 +2,32 @@
 # Toggle a persistent scratchpad browser instance hosting an LLM chat.
 # Is only ever terminated when the window is closed manually.
 
-workspace_of_window=$(hyprctl clients -j | jq -r '.[] | select (.initialClass=="ai-window-ff") | .workspace.name')
-if [ -z "$workspace_of_window" ]; then
+window_workspace=$(hyprctl clients -j | jq -r '.[] | select (.initialClass=="ai-window-ff") | .workspace.name')
+if [ -z "$window_workspace" ]; then
   # Means window does not exist yet -> start it
   firefox -P ai-window --name ai-window-ff https://kagi.com/assistant &
-elif [ "$workspace_of_window" = 'special:scratch' ]; then
-  # Currently hidden -> unhide
+elif [ "$window_workspace" = 'special:scratch' ]; then
+  # Currently hidden -> unhide & focus
   hyprctl --batch \
     'dispatch movetoworkspacesilent 1,initialclass:ai-window-ff ; ' \
     'dispatch pin initialclass:ai-window-ff ; ' \
     'dispatch focuswindow initialclass:ai-window-ff'
 else
-  # Currently visible -> hide
-  hyprctl --batch \
-    'dispatch pin initialclass:ai-window-ff ; ' \
-    'dispatch movetoworkspacesilent special:scratch,initialclass:ai-window-ff ; ' \
-    'dispatch cyclenext prev'
+  # Currently visible
+
+  # Dont use focusHistoryID here - it does not always coincide with the actual
+  # active window!
+  active_window_init_class=$(hyprctl activewindow -j | jq -r '.initialClass')
+  if [ "$active_window_init_class" = 'ai-window-ff' ]; then
+    # Currently focused -> hide
+    hyprctl --batch \
+      'dispatch cyclenext prev hist ; ' \
+      'dispatch pin initialclass:ai-window-ff ; ' \
+      'dispatch movetoworkspacesilent special:scratch,initialclass:ai-window-ff'
+    # Note: cyclenext needs to come first; the other commands do something weird with the focus history
+  else
+    # Currently NOT focused -> focus
+    hyprctl dispatch focuswindow initialclass:ai-window-ff
+  fi
+
 fi
