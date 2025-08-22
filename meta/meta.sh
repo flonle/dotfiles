@@ -148,15 +148,15 @@ set_default_shell() {
 # Write a copy of $DEV_DIR to $MIRROR_DIR.
 # This allows work in the former to not affect the current system, until thawed.
 freeze() {
-    rm -rf "$MIRROR_DIR"
-    rsync -av --progress "${DEV_DIR}/" "$MIRROR_DIR" --mkpath
+    sudo rm -rf "$MIRROR_DIR"
+    rsync -av --progress --exclude='.git/' "${DEV_DIR}/" "$MIRROR_DIR" --mkpath
 }
 
 
 # Make $MIRROR_DIR a symlink to $DEV_DIR.
 # This undoes freeze() and completely overrides $MIRROR_DIR.
 thaw() {
-    rm -rf "$MIRROR_DIR"
+    sudo rm -rf "$MIRROR_DIR"
     set_symlinks "${MIRROR_DIR}:${DEV_DIR}"
 }
 
