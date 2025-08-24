@@ -6,7 +6,7 @@ PartOf=graphical-session.target
 
 [Service]
 Type=simple
-ExecStart=%h/dotfiles/bin/hypr-watcher
+ExecStart=%h/bin/hypr-watcher
 Restart=always
 RestartSec=3
 

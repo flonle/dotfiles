@@ -117,6 +117,9 @@ enable_systemd_services() {
 
     sudo systemctl enable --now fstrim.timer
     echo 'Enabled systemd unit fstrim.timer'
+
+    systemctl --user enable --now hypr-watcher.service
+    echo 'Enable systemd unit hypr-watcher.service'
 }
 
 configure_sysctl() {

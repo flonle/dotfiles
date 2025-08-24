@@ -47,7 +47,7 @@ bindkey '^[[F' end-of-line  # End
 bindkey '^U' undo  # CTRL U
 
 # ----- PATH
-path+=("${HOME}/dotfiles/bin")
+path+=("${HOME}/bin")
 export PATH
 
 # ----- Plugins

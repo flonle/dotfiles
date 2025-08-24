@@ -6,6 +6,7 @@ import (
 	"log"
 	"net"
 	"os"
+	"os/exec"
 	"strings"
 )
 
@@ -26,7 +27,16 @@ var eventHandlers = []EventHandler{
 	{
 		Name:       "Monitor manager",
 		EventTypes: []string{"monitorremovedv2", "monitoraddedv2"},
-		Func:       func(event Event) {},
+		Func: func(event Event) {
+			cmd, err := exec.LookPath("hyprmon")
+			if err != nil {
+				fmt.Printf("Error: could not find find hyprmon: %v\n", err)
+			}
+			out, err := exec.Command(cmd, "1").CombinedOutput()
+			if err != nil {
+				fmt.Printf("Error while executing hyprmon: %v: %s\n", err, out)
+			}
+		},
 	},
 }
 
