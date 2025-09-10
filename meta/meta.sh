@@ -43,7 +43,8 @@ bootstrap() {
 
     set_symlinks "${SYMLINKS[@]}"
     ensure_yay
-    grep '^\s*(#|$)' "${MIRROR_DIR}/meta/pkglist.txt" | xargs yay -S --needed --noconfirm  # assert all packages
+    echo 'installing packages from pkglist.txt...'
+    grep -v -E '^\s*(#.*|$)' "${MIRROR_DIR}/meta/pkglist.txt" | xargs yay -S --needed --noconfirm  # assert all packages
     enable_systemd_services
     set_default_shell
 }
@@ -51,6 +52,7 @@ bootstrap() {
 
 # Install yay if not already installed
 ensure_yay() {
+    echo 'Ensuring yay is installed...'
     command -v yay > /dev/null && return 0  # early exit if yay already installed
 
     local tmp_dir
@@ -72,12 +74,13 @@ ensure_yay() {
 # Set all symlinks in argv. Each arg is a symlink in the form of src:dir.
 # If src already exists and is a file, it will be backed up using backup_file().
 set_symlinks() {
+    echo 'Setting symlinks...'
     local symlinks=("$@")
     for pair in "${symlinks[@]}"; do
         IFS=':' read -r dest src <<< "$pair"
 
-        if [[ -e "$dest" ]]; then
-            # Back up regular file or directory
+        if [[ -e "$dest" && ! -L "$dest" ]]; then
+            # Back up regular file or directory, not symlinks
             backup_file "$dest"
         fi
 
@@ -106,6 +109,8 @@ backup_file() {
 
 
 enable_systemd_services() {
+    echo 'Enabling systemd services...'
+
     sudo systemctl enable --now bluetooth.service
     echo 'Enabled systemd unit bluetooth.service'
 
