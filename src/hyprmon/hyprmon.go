@@ -63,7 +63,7 @@ func toggleMonitors(mons []Monitor) error {
 		b.WriteString(" ; ")
 	}
 
-	if b.Len() > 0 {
+	if b.Len() == 0 {
 		return nil // no command to emit
 	}
 	return exec.Command(HyprctlPath, "--batch", b.String()).Run()
