@@ -169,6 +169,15 @@ thaw() {
 }
 
 
+state() {
+    if [ -L "$MIRROR_DIR" ]; then
+        echo 'Thawed'
+    else
+        echo 'Frozen'
+    fi
+}
+
+
 help() {
   cat <<EOF
 Usage: $0 <function> [args...]
@@ -180,7 +189,7 @@ EOF
 
 
 # ----- Dispatcher -----
-if [[ $# -lt 1 ]]; then
+if [ $# -lt 1 ]; then
   help
   exit 1
 fi
