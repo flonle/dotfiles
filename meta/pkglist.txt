@@ -63,6 +63,7 @@ yazi
 helix
 bibata-cursor-theme-bin
 git-delta
+mako
 
 # For 'checkupdates'
 pacman-contrib
