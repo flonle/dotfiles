@@ -27,7 +27,7 @@
     "backlight": {
         "device": "intel_backlight",
         "format": "{icon}",
-        "tooltip-format": "Brigtness: {percent}%",
+        "tooltip-format": "Brightness: {percent}%",
         "format-icons": ["󰃞", "󰃝", "󰃟", "󰃠"]
     },
     "pulseaudio": {
