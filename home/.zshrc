@@ -94,12 +94,15 @@ function y() {
 	rm -f -- "$tmp"
 }
 
-# ----- Directory history command 'd'
+# Directory history command 'd'
 alias d='dirs -v'
 for index ({1..9}) alias "$index"="cd +${index}"; unset index
 
 # Prompt
 eval "$(starship init zsh)"
+
+# Zoxide
+eval "$(zoxide init zsh)"
 
 # Emit OSC-7 escape sequences
 function osc7-pwd() {
