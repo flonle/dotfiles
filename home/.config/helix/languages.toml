@@ -24,3 +24,9 @@ name = "python"
 language-servers = ["ruff", "harper-ls"]
 formatter = { command = "ruff", args = ["format", "-"] }
 auto-format = true
+
+[[language]]
+name = "html"
+language-servers = ["superhtml"]
+formatter = { command = "superhtml", args = ["fmt", "--stdin"] }
+auto-format = true
