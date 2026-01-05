@@ -9,16 +9,15 @@ else
     input="$1"
 fi;
 
-# Get a random wallpaper that is not the current one
+# Get a random wallpaper
 if [ -d "$input" ]; then
-    current_wall=$(hyprctl hyprpaper listloaded)
-    wallpaper=$(find "$input" -type f ! -name "$(basename "$current_wall")" | shuf -n 1)
+    wallpaper=$(find "$input" -type f | shuf -n 1)
 else
     wallpaper="$input"
 fi;
 
 echo "Setting new wallpaper: ${wallpaper}..."
-while ! hyprctl hyprpaper reload , "$wallpaper"; do
+while ! hyprctl hyprpaper wallpaper ", ${wallpaper}"; do
     sleep 0.1
     echo 'Retrying hyprpaper IPC'
     # Because at startup, this might run before the hyprpaper socket exists
