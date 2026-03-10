@@ -21,12 +21,16 @@ language-servers = ["markdown-oxide", "harper-ls"]
 
 [[language]]
 name = "python"
-language-servers = ["ruff", "harper-ls"]
-formatter = { command = "ruff", args = ["format", "-"] }
-auto-format = true
+language-servers = ["pylsp"]
+formatter = { command = "black", args = ["--quiet", "-"] }
+auto-format = false
+
+[language-server.pylsp.config.pylsp]
+plugins.pylsp_mypy.enabled = true
+plugins.pylsp_mypy.live_mode = true
 
 [[language]]
 name = "html"
 language-servers = ["superhtml"]
 formatter = { command = "superhtml", args = ["fmt", "--stdin"] }
-auto-format = true
+auto-format = false

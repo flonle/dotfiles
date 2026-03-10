@@ -42,8 +42,8 @@ C-h = "jump_view_left"
 C-j = "jump_view_down"
 C-k = "jump_view_up"
 C-l = "jump_view_right"
-C-t = ':sh foot'  # term
-S-t = ':sh foot -D $(dirname %{buffer_name})'  # term in cwd
+C-t = ':sh ghostty'  # term
+S-t = ':sh ghostty --working-directory=$(dirname %{buffer_name})'  # term in cwd
 # Yazi!:
 C-e = [
   ':sh rm -f /tmp/helix_yazi_chooser_file_uniq',
