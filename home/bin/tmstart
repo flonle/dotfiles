@@ -1,0 +1,16 @@
+#!/bin/sh
+
+TMS_PATH="${HOME}/dev/qargo/backend/projects/tms/"
+
+cd $TMS_PATH
+
+./reauth.sh
+docker compose -f deploy/docker-compose.yml up -d
+git fetch origin master:master
+source venv/bin/activate  # necessary for the `vsctasks` call, too.
+# open https://local-test.qargo.com
+vsctasks run '[tms] >Migrate LocalDB' \
+             '[tms] Hasura import/export + permissions'
+             # '[tms] >Django LocalDB'
+
+# echo "$TMS_PATH"  # Just so I can do `cd $(tmstart)` and this doesn't have to be a shell function
