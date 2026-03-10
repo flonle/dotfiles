@@ -19,6 +19,9 @@
 	dark = true
 	side-by-side = true
 	hyperlinks = true
+[user]
+	name = Florian Laporte
+	email = florian.laporte@qargo.com
 [merge]
 	conflictStyle = zdiff3
 [alias]
