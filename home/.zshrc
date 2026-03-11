@@ -87,6 +87,7 @@ alias ll='eza -al'
 alias helix='hx'
 alias img='img2sixel'
 alias py='ipython'
+alias translate='cd src/i18n && qargo-translate translate && git add . && git commit -m "Add translations using qargo-translate."'
 
 # ----- Functions
 # Install packages using yay
