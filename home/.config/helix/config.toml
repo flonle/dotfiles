@@ -57,6 +57,7 @@ C-e = [
 C-n = 'extend_search_next' 
 # Git blame current line, multiple commits:
 C-b = ':sh cd "$(pwd)/$(dirname %{buffer_name})" && git log -n 5 --format="format:%%h (%%an: %%ar) %%s" --no-patch -L%{cursor_line},+1:$(basename %{buffer_name})'
+C-r = ':reload-all'
 
 [keys.insert]
 C-s = "normal_mode"  # double tap s for normal mode + save buffer
