@@ -1,0 +1,17 @@
+#!/bin/bash
+docker stop qargo-db
+
+if [ -n "$1" ]; then
+  # Write to provided directory on host filesystem
+  mkdir -p "$1"
+  docker run --rm -v deploy_qargo-pg-data17:/data -v "$1":/backup alpine cp -r /data/. /backup
+else
+  # Write to a docker volume (single snapshot slot)
+  docker volume create qargo-pg-data17-snap > /dev/null
+  docker run --rm \
+    -v deploy_qargo-pg-data17:/source \
+    -v deploy_qargo-pg-data17-snap:/dest \
+    alpine sh -c "rm -rf /dest/* && cp -r /source/. /dest"
+fi
+
+docker start qargo-db
