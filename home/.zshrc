@@ -86,7 +86,7 @@ alias ls='eza -a'
 alias ll='eza -al'
 alias helix='hx'
 alias img='img2sixel'
-alias py='ipython'
+alias py='uvx ipython'
 alias translate='cd src/i18n && qargo-translate translate && git add . && git commit -m "Add translations using qargo-translate."'
 
 # ----- Functions
@@ -147,26 +147,27 @@ eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 
 # Pyenv
+eval "$(pyenv init -)"
 # The following replaces `eval "$(pyenv init -)"`, because that shit's slow. I'll simply hardcode the return value here.
-path=("${(@)path:#$HOME/.pyenv/shims}") # Remove existing pyenv shims from PATH (zsh-native, no subprocess)
+# path=("${(@)path:#$HOME/.pyenv/shims}") # Remove existing pyenv shims from PATH (zsh-native, no subprocess)
 
-export PATH="$HOME/.pyenv/shims:$PATH"
-export PYENV_SHELL=zsh
-source '/opt/homebrew/Cellar/pyenv/2.6.25/completions/pyenv.zsh'
-# command pyenv rehash
-# The above is tremendously slow, I'll just manually rehash shims when something requires it
-pyenv() {
-  local command=${1:-}
-  [ "$#" -gt 0 ] && shift
-  case "$command" in
-  rehash|shell)
-    eval "$(pyenv "sh-$command" "$@")"
-    ;;
-  *)
-    command pyenv "$command" "$@"
-    ;;
-  esac
-}
+# export PATH="$HOME/.pyenv/shims:$PATH"
+# export PYENV_SHELL=zsh
+# source '/opt/homebrew/Cellar/pyenv/2.6.25/completions/pyenv.zsh'
+# # command pyenv rehash
+# # The above is tremendously slow, I'll just manually rehash shims when something requires it
+# pyenv() {
+#   local command=${1:-}
+#   [ "$#" -gt 0 ] && shift
+#   case "$command" in
+#   rehash|shell)
+#     eval "$(pyenv "sh-$command" "$@")"
+#     ;;
+#   *)
+#     command pyenv "$command" "$@"
+#     ;;
+#   esac
+# }
 
 # Node Version Manager
 # mkdir -p "${HOME}/.nvm"
@@ -189,7 +190,8 @@ ln -sfn /opt/homebrew/opt/docker-compose/bin/docker-compose ~/.docker/cli-plugin
 # Function to find & run VSCode tasks/launches interactively with fzf
 vt() {
   vsctasks list --root "${1:-.}" \
-    | fzf --preview 'vsctasks info {}' --preview-window=right:40% \
+    | fzf --delimiter $'\t' --with-nth 1 --preview 'vsctasks info {2} | jq -C' --preview-window=right:40% \
+    | cut -f2 \
     | vsctasks run --root "${1:-.}"
 }
 
