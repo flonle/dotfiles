@@ -20,6 +20,7 @@ setopt HIST_SAVE_NO_DUPS
 setopt AUTO_PUSHD
 setopt PUSHD_IGNORE_DUPS
 setopt PUSHD_SILENT
+setopt SHARE_HISTORY
 
 # ----- Vi / Helix
 # Surprisingly enough, I don't use Vi mode. I find it clunky at best, and while
@@ -88,6 +89,7 @@ alias helix='hx'
 alias img='img2sixel'
 alias py='uvx ipython'
 alias translate='cd src/i18n && qargo-translate translate && git add . && git commit -m "Add translations using qargo-translate."'
+alias ld='lazydocker'
 
 # ----- Functions
 # Install packages using yay
@@ -107,7 +109,7 @@ function y() {
 	rm -f -- "$tmp"
 }
 # Git diffs in Helix
-hxdiff() {
+function hxdiff() {
   if ! git rev-parse --is-inside-work-tree &>/dev/null; then
     echo "Not in a git repo"
     return 1
@@ -122,7 +124,7 @@ hxdiff() {
   fi
 }
 # Same as above, but relative (so only diff at or below cwd)
-hxrdiff() {
+function hxrdiff() {
   if ! git rev-parse --is-inside-work-tree &>/dev/null; then
     echo "Not in a git repo"
     return 1
@@ -134,6 +136,13 @@ hxrdiff() {
   else
     echo "Nothing to diff"
   fi
+}
+
+# Quick access to qargo projects
+function workon () {
+    local dir="$HOME/.qargo-workspaces/$(ls ~/.qargo-workspaces | fzf)"
+    print -s "cd $dir"
+    cd "$dir"
 }
 
 # Directory history command 'd'
@@ -188,13 +197,22 @@ mkdir -p ~/.docker/cli-plugins
 ln -sfn /opt/homebrew/opt/docker-compose/bin/docker-compose ~/.docker/cli-plugins/docker-compose
 
 # Function to find & run VSCode tasks/launches interactively with fzf
-vt() {
-  vsctasks list --root "${1:-.}" \
+# function vt() {
+#   vsctasks list --root "${1:-.}" \
+#     | fzf --delimiter $'\t' --with-nth 1 --preview 'vsctasks info {2} | jq -C' --preview-window=right:40% \
+#     | cut -f2 \
+#     | vsctasks run --root "${1:-.}"
+# }
+function vt() {
+  local root="${1:-.}"
+  local task
+  task=$(vsctasks list --root "$root" \
     | fzf --delimiter $'\t' --with-nth 1 --preview 'vsctasks info {2} | jq -C' --preview-window=right:40% \
-    | cut -f2 \
-    | vsctasks run --root "${1:-.}"
+    | cut -f2)
+  [[ -z "$task" ]] && return
+  print -s "vsctasks run --root ${(q)root} '${(q)task}'"
+  vsctasks run --root "$root" "$task"
 }
-
 # Emit OSC-7 escape sequences
 function osc7-pwd() {
     emulate -L zsh # also sets localoptions for us
