@@ -20,6 +20,7 @@ setopt HIST_SAVE_NO_DUPS
 setopt AUTO_PUSHD
 setopt PUSHD_IGNORE_DUPS
 setopt PUSHD_SILENT
+setopt SHARE_HISTORY
 
 # ----- Vi / Helix
 # Surprisingly enough, I don't use Vi mode. I find it clunky at best, and while
