@@ -1,0 +1,11 @@
+#!/bin/sh
+rg -n '\bMARK: ' || exit
+printf 'Remove these? [y/N] '
+read -r a
+[ "$a" = "y" ] && rg -l '\bMARK: ' | xargs gsed -i '/\bMARK: /d'
+
+# #!/usr/bin/env bash
+# rg -n '\bMARK: ' || exit
+# read -rp "Remove these? [y/N] " a
+# [[ "$a" == "y" ]] && rg -l '\bMARK: ' | xargs gsed -i '/\bMARK: /d'
+
