@@ -40,7 +40,7 @@ on-focus-changed = ['move-mouse window-lazy-center']
 # You can effectively turn off macOS "Hide application" (cmd-h) feature by toggling this flag
 # Useful if you don't use this macOS feature, but accidentally hit cmd-h or cmd-alt-h key
 # Also see: https://nikitabobko.github.io/AeroSpace/goodies#disable-hide-app
-automatically-unhide-macos-hidden-apps = false
+automatically-unhide-macos-hidden-apps = true
 
 # List of workspaces that should stay alive even when they contain no windows,
 # even when they are invisible.
@@ -125,7 +125,7 @@ on-mode-changed = []
 
     # Application shortcuts
     alt-enter = 'exec-and-forget open -n -a Ghostty'
-    alt-b = 'exec-and-forget open -a Orion'
+    alt-b = 'exec-and-forget open -a Chrome'
     alt-e = 'exec-and-forget open -a Finder'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#layout

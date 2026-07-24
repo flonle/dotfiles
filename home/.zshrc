@@ -47,6 +47,9 @@ bindkey '^[[H' beginning-of-line  # Home
 bindkey '^[[F' end-of-line  # End
 bindkey '^U' undo  # CTRL U
 
+# macos shenanigans
+ulimit -n 65536  # default per-process open fd limit is 256 on macos...
+
 # Brew env vars
 # Instead of: eval "$(brew shellenv)", because that command takes ~30ms...
 export HOMEBREW_PREFIX="/opt/homebrew"
@@ -225,3 +228,11 @@ function chpwd-osc7-pwd() {
     (( ZSH_SUBSHELL )) || osc7-pwd
 }
 add-zsh-hook -Uz chpwd chpwd-osc7-pwd
+
+# pnpm
+export PNPM_HOME="/Users/florian.laporte/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+# pnpm end
