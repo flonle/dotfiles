@@ -4,15 +4,16 @@
 set -euo pipefail
 
 # This is the directory in which you can commit changes to the default release,
-# pull updates from upstream, resolve conflicts, etc.
-DEV_DIR="${HOME}/dotfiles"
+# pull updates from upstream, resolve conflicts, etc. It's this script's checkout,
+# wherever it lives (e.g. ~/dotfiles or ~/dev/flonle/dotfiles).
+DEV_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 if [[ ! -d "$DEV_DIR" ]]; then
     echo "Could not find directory ${DEV_DIR}, aborting." >&2    
     exit 1
 fi
 
-if [[ ! -d "${DEV_DIR}/.git" ]]; then
+if [[ ! -e "${DEV_DIR}/.git" ]]; then
     echo "${DEV_DIR} is not a Git repository, cowardly refusing." >&2
     exit 1
 fi

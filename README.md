@@ -11,7 +11,7 @@ One branch for every machine. `meta/meta.sh` detects the OS:
 - **macOS / Debian**: only the shared dotfiles (zsh, git, helix, yazi, starship), plus AeroSpace, Ghostty and Karabiner on macOS.
 
 ```sh
-git clone https://github.com/flonle/dotfiles.git ~/dotfiles
+git clone https://github.com/flonle/dotfiles.git ~/dotfiles  # any location works
 ~/dotfiles/meta/meta.sh bootstrap <host>
 ```
 
