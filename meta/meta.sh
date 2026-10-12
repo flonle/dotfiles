@@ -140,7 +140,7 @@ set_symlinks() {
             backup_file "$dest"
         fi
 
-        ln -sf -- "$src" "$dest"
+        ln -sfn -- "$src" "$dest"  # -n: replace a symlink to a directory instead of linking inside it
         echo "Symlinked ${dest} → ${src}"
     done
 }
