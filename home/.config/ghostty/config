@@ -2,3 +2,4 @@ working-directory = home
 window-inherit-working-directory = false
 confirm-close-surface = false
 theme = Catppuccin Frappe
+shell-integration-features = ssh-terminfo
