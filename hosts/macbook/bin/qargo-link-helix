@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Link the Qargo Helix settings into every Qargo repo and worktree, as an untracked `.helix`.
+# Usage: qargo-link-helix [dir...]   (default: ~/dev/qargo and ~/.qargo-workspaces)
+# Idempotent: existing `.helix` entries are left alone.
+set -euo pipefail
+
+target="${HOME}/.dotfiles/hosts/macbook/helix-work"
+roots=("$@")
+(( ${#roots[@]} )) || roots=("${HOME}/dev/qargo" "${HOME}/.qargo-workspaces")
+
+# Repo roots are the parents of `.git` (a directory in clones, a file in worktrees).
+find "${roots[@]}" -maxdepth 3 -name .git -prune -print 2>/dev/null | while read -r git; do
+    repo=$(dirname "$git")
+
+    # info/exclude lives in the main repo and is shared by all of its worktrees.
+    if ! common_dir=$(git -C "$repo" rev-parse --path-format=absolute --git-common-dir 2>/dev/null); then
+        echo "skipping ${repo}: not a working git repo (stale worktree?)" >&2
+        continue
+    fi
+    exclude="${common_dir}/info/exclude"
+    mkdir -p "$(dirname "$exclude")"
+    grep -qxF '.helix' "$exclude" 2>/dev/null || echo '.helix' >> "$exclude"
+
+    if [[ ! -e "${repo}/.helix" && ! -L "${repo}/.helix" ]]; then
+        ln -s "$target" "${repo}/.helix"
+        echo "linked ${repo}/.helix"
+    fi
+done

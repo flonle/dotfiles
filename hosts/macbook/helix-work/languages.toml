@@ -1,0 +1,16 @@
+# Qargo work settings. Merged over ~/.config/helix/languages.toml (by language name)
+# in every Qargo repo, through a `.helix` symlink created by `qargo-link-helix`.
+
+[[language]]
+name = "python"
+language-servers = ["pylsp"]
+formatter = { command = "black", args = ["--quiet", "-"] }
+auto-format = false
+
+[language-server.pylsp.config.pylsp]
+plugins.pylsp_mypy.enabled = true
+plugins.pylsp_mypy.live_mode = true
+
+[[language]]
+name = "html"
+auto-format = false

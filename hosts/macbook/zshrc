@@ -12,6 +12,7 @@ function workon () {
     local dir="$HOME/.qargo-workspaces/$(ls ~/.qargo-workspaces | fzf)"
     print -s "cd $dir"
     cd "$dir"
+    qargo-link-helix "$dir"  # work Helix settings for any new worktrees
 }
 
 # Function to find & run VSCode tasks/launches interactively with fzf
