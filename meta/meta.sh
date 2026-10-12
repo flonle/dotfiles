@@ -205,7 +205,11 @@ configure_sysctl() {
 
 set_default_shell() {
     local zsh
-    zsh=$(command -v zsh)
+    if ! zsh=$(command -v zsh); then
+        echo 'zsh is not installed; skipping the default shell. Install it, then run: chsh -s "$(command -v zsh)"' >&2
+        return 0
+    fi
+
     chsh -s "$zsh" "$USER"
     echo "Set default shell for ${USER} to ${zsh}"
 }
