@@ -23,16 +23,48 @@ fi
 # in DEV_DIR.
 MIRROR_DIR="${HOME}/.dotfiles"
 
+# arch: the full desktop (all of ~/.config). macos/debian: only the shared dotfiles.
+case "$(uname -s)" in
+    Darwin) OS=macos ;;
+    Linux)  OS=$(. /etc/os-release && echo "$ID") ;;  # arch, debian, ...
+    *)      OS=unknown ;;
+esac
+
 SYMLINKS=(
   "${HOME}/.zshrc:${MIRROR_DIR}/home/.zshrc"
   "${HOME}/.gitconfig:${MIRROR_DIR}/home/.gitconfig"
   "${HOME}/bin:${MIRROR_DIR}/home/bin"
-  "${HOME}/wallpapers:${MIRROR_DIR}/home/wallpapers"
-  "${HOME}/.config:${MIRROR_DIR}/home/.config"
 )
+
+case "$OS" in
+    arch)
+        SYMLINKS+=(
+          "${HOME}/wallpapers:${MIRROR_DIR}/home/wallpapers"
+          "${HOME}/.config:${MIRROR_DIR}/home/.config"
+        )
+        ;;
+    macos)
+        SYMLINKS+=(
+          "${HOME}/.aerospace.toml:${MIRROR_DIR}/home/.aerospace.toml"
+          "${HOME}/.config/helix:${MIRROR_DIR}/home/.config/helix"
+          "${HOME}/.config/yazi:${MIRROR_DIR}/home/.config/yazi"
+          "${HOME}/.config/starship.toml:${MIRROR_DIR}/home/.config/starship.toml"
+          "${HOME}/.config/ghostty:${MIRROR_DIR}/home/.config/ghostty"
+          "${HOME}/.config/karabiner:${MIRROR_DIR}/home/.config/karabiner"
+        )
+        ;;
+    *)
+        SYMLINKS+=(
+          "${HOME}/.config/helix:${MIRROR_DIR}/home/.config/helix"
+          "${HOME}/.config/yazi:${MIRROR_DIR}/home/.config/yazi"
+          "${HOME}/.config/starship.toml:${MIRROR_DIR}/home/.config/starship.toml"
+        )
+        ;;
+esac
 
 
 # install/update. SHOULD BE IDEMPOTENT.
+# Usage: bootstrap [host]  — host selects hosts/<host>/{zshrc,gitconfig} as ~/.zshrc.local and ~/.gitconfig.local
 bootstrap() {
     if [[ "$EUID" -eq 0 ]]; then
         echo 'Do not run this script as root.' >&2
@@ -41,12 +73,35 @@ bootstrap() {
 
     thaw  # makes sure $MIRROR_DIR exists first
 
+    mkdir -p "${HOME}/.config"
     set_symlinks "${SYMLINKS[@]}"
-    ensure_yay
-    echo 'installing packages from pkglist.txt...'
-    grep -v -E '^\s*(#.*|$)' "${MIRROR_DIR}/meta/pkglist.txt" | xargs yay -S --needed --noconfirm  # assert all packages
-    enable_systemd_services
-    set_default_shell
+    link_host "${1:-}"
+
+    if [[ "$OS" == arch ]]; then
+        ensure_yay
+        echo 'installing packages from pkglist.txt...'
+        grep -v -E '^\s*(#.*|$)' "${MIRROR_DIR}/meta/pkglist.txt" | xargs yay -S --needed --noconfirm  # assert all packages
+        enable_systemd_services
+    fi
+
+    [[ "$SHELL" == */zsh ]] || set_default_shell
+}
+
+
+# Link the machine-specific files of hosts/<host>/, if any.
+link_host() {
+    local host="$1"
+    [[ -z "$host" ]] && return 0
+
+    local dir="${MIRROR_DIR}/hosts/${host}"
+    if [[ ! -d "$dir" ]]; then
+        echo "No ${dir}, skipping machine-specific config." >&2
+        return 0
+    fi
+
+    [[ -f "${dir}/zshrc" ]] && set_symlinks "${HOME}/.zshrc.local:${dir}/zshrc"
+    [[ -f "${dir}/gitconfig" ]] && set_symlinks "${HOME}/.gitconfig.local:${dir}/gitconfig"
+    return 0
 }
 
 
@@ -148,8 +203,10 @@ configure_sysctl() {
 
 
 set_default_shell() {
-    chsh -s /bin/zsh "$USER"
-    echo "Set default shell for ${USER} to /bin/zsh"
+    local zsh
+    zsh=$(command -v zsh)
+    chsh -s "$zsh" "$USER"
+    echo "Set default shell for ${USER} to ${zsh}"
 }
 
 

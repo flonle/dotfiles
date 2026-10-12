@@ -1,0 +1,49 @@
+# Work laptop (Qargo). Sourced from ~/.zshrc via the ~/.zshrc.local symlink.
+
+# Work scripts next to this file (db_snapshot, db_rollback, tmstart)
+path+=("${${(%):-%x}:A:h}/bin")
+path+=("/opt/homebrew/opt/postgresql@17/bin")
+
+alias ld='lazydocker'
+alias translate='cd src/i18n && qargo-translate translate && git add . && git commit -m "Add translations using qargo-translate."'
+
+# Quick access to qargo projects
+function workon () {
+    local dir="$HOME/.qargo-workspaces/$(ls ~/.qargo-workspaces | fzf)"
+    print -s "cd $dir"
+    cd "$dir"
+}
+
+# Function to find & run VSCode tasks/launches interactively with fzf
+function vt() {
+  local root="${1:-.}"
+  local task
+  task=$(vsctasks list --root "$root" \
+    | fzf --delimiter $'\t' --with-nth 1 --preview 'vsctasks info {2} | jq -C' --preview-window=right:40% \
+    | cut -f2)
+  [[ -z "$task" ]] && return
+  print -s "vsctasks run --root ${(q)root} '${(q)task}'"
+  vsctasks run --root "$root" "$task"
+}
+
+# Pyenv
+eval "$(pyenv init -)"
+
+# Node: fnm instead of nvm, because the latter is unbearably slow.
+eval "$(fnm env --use-on-cd --shell zsh)"
+
+# Google Cloud (`google-cloud-sdk`)
+source "${HOMEBREW_PREFIX}/share/google-cloud-sdk/path.zsh.inc"
+source "${HOMEBREW_PREFIX}/share/google-cloud-sdk/completion.zsh.inc"
+export USE_GKE_CLOUD_AUTH_PLUGIN=True
+
+# Qargo docs state they want this ~/.docker/cli-plugins/docker-compose file, but I don't know why...
+mkdir -p ~/.docker/cli-plugins
+ln -sfn /opt/homebrew/opt/docker-compose/bin/docker-compose ~/.docker/cli-plugins/docker-compose
+
+# pnpm
+export PNPM_HOME="${HOME}/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac

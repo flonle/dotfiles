@@ -1,0 +1,16 @@
+#!/bin/bash
+docker stop qargo-db
+
+if [ -n "$1" ]; then
+  # Restore from provided directory on host filesystem
+  docker run --rm -v deploy_qargo-pg-data17:/data -v "$1":/backup alpine \
+    sh -c "rm -rf /data/* && cp -r /backup/. /data"
+else
+  # Restore from docker volume
+  docker run --rm \
+    -v deploy_qargo-pg-data17:/dest \
+    -v deploy_qargo-pg-data17-snap:/source \
+    alpine sh -c "rm -rf /dest/* && cp -r /source/. /dest"
+fi
+
+docker start qargo-db

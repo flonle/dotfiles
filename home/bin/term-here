@@ -1,0 +1,12 @@
+#!/bin/sh
+# Open a terminal in the given directory (default: current one): foot on Linux, Ghostty on macOS.
+dir="${1:-$PWD}"
+
+if command -v foot > /dev/null; then
+    exec foot -D "$dir"
+elif command -v ghostty > /dev/null; then
+    exec ghostty --working-directory="$dir"
+else
+    echo "term-here: no supported terminal found" >&2
+    exit 1
+fi

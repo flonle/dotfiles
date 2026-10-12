@@ -29,3 +29,6 @@
 	email = florian@laporte.cc
 [diff]
 	context = 20
+[include]
+	# Machine-specific overrides; symlinked to hosts/<host>/gitconfig by `meta.sh bootstrap <host>`.
+	path = ~/.gitconfig.local

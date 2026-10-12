@@ -1,0 +1,4 @@
+[delta]
+	side-by-side = false
+[pager]
+	diff = diffnav

@@ -3,7 +3,23 @@ zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
 zstyle ':completion:*' menu select=1
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
-zstyle :compinstall filename '/home/flo/.zshrc'
+zstyle :compinstall filename "${HOME}/.zshrc"
+
+# ----- macOS
+# Before compinit, so Homebrew's completions are picked up.
+if [[ $OSTYPE == darwin* ]]; then
+    ulimit -n 65536  # default per-process open fd limit is 256 on macos...
+
+    # Brew env vars
+    # Instead of: eval "$(brew shellenv)", because that command takes ~30ms...
+    export HOMEBREW_PREFIX="/opt/homebrew"
+    export HOMEBREW_CELLAR="/opt/homebrew/Cellar"
+    export HOMEBREW_REPOSITORY="/opt/homebrew"
+    export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:"
+    export INFOPATH="/opt/homebrew/opt/info:${INFOPATH:-}"
+    path+=("/opt/homebrew/bin" "/opt/homebrew/sbin")
+    fpath=("/opt/homebrew/share/zsh-completions" $fpath)
+fi
 
 autoload -Uz compinit
 compinit
@@ -27,8 +43,15 @@ setopt SHARE_HISTORY
 # plugins like zsh-vi-mode fix a lot, some things remain (like an annoying mode-switch delay,
 # even with a tweaked KEYTIMEOUT).
 # Instead, I rely on ^E to *E*dit the current command in Helix.
-export EDITOR="helix"
-export VISUAL="helix"
+# Arch calls the binary `helix`, Homebrew and Debian call it `hx`.
+if (( $+commands[helix] )); then
+    export EDITOR="helix"
+    alias hx='helix'
+else
+    export EDITOR="hx"
+    alias helix='hx'
+fi
+export VISUAL="$EDITOR"
 autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey -e
@@ -48,21 +71,32 @@ bindkey '^[[F' end-of-line  # End
 bindkey '^U' undo  # CTRL U
 
 # ----- PATH
+typeset -U path  # no duplicates
 path+=("${HOME}/bin")
+for dir in "${HOME}/.local/bin" "${HOME}/.cargo/bin" "${HOME}/go/bin"; do
+    [[ -d $dir ]] && path+=("$dir")
+done
+unset dir
 export PATH
 
 # ----- Plugins
-fpath=(path/to/zsh-completions/src $fpath)
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# Arch: /usr/share/zsh/plugins/, Debian: /usr/share/, macOS: $HOMEBREW_PREFIX/share/
+for plugin in zsh-autosuggestions zsh-syntax-highlighting; do
+    for dir in /usr/share/zsh/plugins /usr/share "${HOMEBREW_PREFIX:-/opt/homebrew}/share"; do
+        if [[ -r "${dir}/${plugin}/${plugin}.zsh" ]]; then
+            source "${dir}/${plugin}/${plugin}.zsh"
+            break
+        fi
+    done
+done
+unset plugin dir
 
 # ----- Prompt
 #fpath=(~/dotfiles/zsh/zsh_fpath $fpath)
 #autoload -Uz zsh_prompt; zsh_prompt
 
-# ----- fzf
-source /usr/share/fzf/completion.zsh
-source /usr/share/fzf/key-bindings.zsh
+# ----- fzf completions & keybinds
+(( $+commands[fzf] )) && source <(fzf --zsh)
 
 # ----- Aliases
 alias gs='git status'
@@ -74,18 +108,23 @@ alias gp='git pull'
 alias ls='eza -a'
 alias ll='eza -al'
 alias img='img2sixel'
-alias hx='helix'
-alias py='ipython'
+if (( $+commands[ipython] )); then
+    alias py='ipython'
+else
+    alias py='uvx ipython'
+fi
 
 # ----- Functions
-# Install packages using yay
-function yayin() {
-    yay -Slq | fzf -q "$1" -m --preview 'yay -Si {1}'| xargs -ro yay -S
-}
-# Remove installed packages using yay
-function yayre() {
-    yay -Qq | fzf -q "$1" -m --preview 'yay -Qi {1}' | xargs -ro yay -Rns
-}
+if (( $+commands[yay] )); then
+    # Install packages using yay
+    function yayin() {
+        yay -Slq | fzf -q "$1" -m --preview 'yay -Si {1}'| xargs -ro yay -S
+    }
+    # Remove installed packages using yay
+    function yayre() {
+        yay -Qq | fzf -q "$1" -m --preview 'yay -Qi {1}' | xargs -ro yay -Rns
+    }
+fi
 # yazi alias + exist at yazi's directory
 function y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
@@ -93,6 +132,35 @@ function y() {
 	IFS= read -r -d '' cwd < "$tmp"
 	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
 	rm -f -- "$tmp"
+}
+# Git diffs in Helix
+function hxdiff() {
+  if ! git rev-parse --is-inside-work-tree &>/dev/null; then
+    echo "Not in a git repo"
+    return 1
+  fi
+  local root=$(git rev-parse --show-toplevel)
+  local -a files=("${(@f)$(git diff --name-only "$@")}")
+  files=(${files:#})  # remove empty entries
+  if (( $#files )); then
+    $EDITOR "${files[@]/#/$root/}"
+  else
+    echo "Nothing to diff"
+  fi
+}
+# Same as above, but relative (so only diff at or below cwd)
+function hxrdiff() {
+  if ! git rev-parse --is-inside-work-tree &>/dev/null; then
+    echo "Not in a git repo"
+    return 1
+  fi
+  local -a files=("${(@f)$(git diff --relative --name-only "$@")}")
+  files=(${files:#})  # remove empty entries
+  if (( $#files )); then
+    $EDITOR "$files[@]"
+  else
+    echo "Nothing to diff"
+  fi
 }
 
 # Directory history command 'd'
@@ -118,3 +186,6 @@ function chpwd-osc7-pwd() {
 }
 add-zsh-hook -Uz chpwd chpwd-osc7-pwd
 
+# ----- Machine-specific config
+# Symlinked to hosts/<host>/zshrc by `meta.sh bootstrap <host>`.
+[[ -r ~/.zshrc.local ]] && source ~/.zshrc.local
