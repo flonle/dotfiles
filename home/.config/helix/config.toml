@@ -75,3 +75,4 @@ h = [
   ":clipboard-yank",
   "undo",
 ]
+l = ":sh echo @'%{buffer_name}:%{selection_line_start}-%{selection_line_end}' | ~/bin/clip"  # copy @file:lines

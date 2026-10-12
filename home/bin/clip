@@ -1,0 +1,12 @@
+#!/bin/sh
+# Copy stdin to the clipboard: pbcopy on macOS, wl-copy on Wayland, xclip on X11,
+# and otherwise (e.g. over SSH) the terminal's clipboard via an OSC 52 escape sequence.
+if command -v pbcopy > /dev/null; then
+    exec pbcopy
+elif [ -n "${WAYLAND_DISPLAY:-}" ] && command -v wl-copy > /dev/null; then
+    exec wl-copy
+elif [ -n "${DISPLAY:-}" ] && command -v xclip > /dev/null; then
+    exec xclip -selection clipboard
+else
+    printf '\033]52;c;%s\a' "$(base64 | tr -d '\n')" > /dev/tty
+fi
