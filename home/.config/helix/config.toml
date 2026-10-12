@@ -26,6 +26,9 @@ center = ["diagnostics", "spinner"]
 right = ["version-control", "spacer", "position", "total-line-numbers"]
 separator = "│"
 
+[editor.whitespace.render]
+newline = "all"
+
 [editor.indent-guides]
 render = true
 character = "╎"  # Some characters that work well: "▏", "┆", "┊", "⸽"
@@ -47,7 +50,7 @@ S-t = ':sh ~/bin/term-here $(dirname %{buffer_name})'  # term in cwd
 # Yazi!:
 C-e = [
   ':sh rm -f /tmp/helix_yazi_chooser_file_uniq',
-  ':insert-output yazi %{buffer_name} --chooser-file=/tmp/helix_yazi_chooser_file_uniq',
+  ':insert-output yazi "%{buffer_name}" --chooser-file=/tmp/helix_yazi_chooser_file_uniq',
   ':insert-output echo "\x1b[?1049h\x1b[?2004h" > /dev/tty',
   ':open %sh{cat /tmp/helix_yazi_chooser_file_uniq}',
   ':redraw',
@@ -56,7 +59,7 @@ C-e = [
 # (instread of entering select mode, going to next search result, and leaving select mode):
 C-n = 'extend_search_next' 
 # Git blame current line, multiple commits:
-C-b = ':sh cd "$(pwd)/$(dirname %{buffer_name})" && git log -n 5 --format="format:%%h (%%an: %%ar) %%s" --no-patch -L%{cursor_line},+1:$(basename %{buffer_name})'
+C-b = ':sh cd "$(pwd)/$(dirname "%{buffer_name}")" && git log -n 5 --format="format:%%h (%%an: %%ar) %%s" --no-patch -L%{cursor_line},+1:"$(basename "%{buffer_name}")"'
 C-r = ':reload-all'
 
 [keys.insert]
